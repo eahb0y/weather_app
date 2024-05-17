@@ -1,14 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
-import 'package:inherit_test/router/app_routes.dart';
+import 'package:inhetited_test/features/home/data/data_source/remote_data_source/home_remote_data_source.dart';
+import 'package:inhetited_test/features/home/data/repository/home_repository_impl.dart';
+import 'package:inhetited_test/features/home/domain/repository/home_repasitory.dart';
+import 'package:inhetited_test/features/home/domain/usecase/home_usecase.dart';
+import 'package:inhetited_test/features/home/presentation/bloc/home_bloc.dart';
+import 'package:inhetited_test/router/app_routes.dart';
 
 final sl = GetIt.instance;
 
-
-Future<void> init() async{
+Future<void> init() async {
   sl.registerLazySingleton(
-        () => Dio()
+    () => Dio()
       ..interceptors.addAll([
         LogInterceptor(
           request: kDebugMode,
@@ -19,5 +23,29 @@ Future<void> init() async{
         chuck.getDioInterceptor(),
       ])
       ..options.contentType = 'application/json',
+  );
+
+  _authFeature();
+}
+
+void _authFeature() {
+  /// Presentation
+  sl.registerFactory(() => HomeBloc(sl()));
+
+  /// UseCases
+  sl.registerLazySingleton<HomeUseCase>(() => HomeUseCase(sl()));
+
+  ///Repositories
+  sl.registerLazySingleton<HomeRepository>(
+    () => HomeRepositoryImpl(
+      sl(),
+    ),
+  );
+
+  /// Data and Network
+  sl.registerLazySingleton<HomeRemoteDataSource>(
+    () => HomeRemoteDataSource(
+      sl(),
+    ),
   );
 }
