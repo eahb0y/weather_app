@@ -21,7 +21,7 @@ class _HomeRemoteDataSourcePlace implements HomeRemoteDataSourcePlace {
   String? baseUrl;
 
   @override
-  Future<GetCurrentPlaceModal> getCurrentPlace(
+  Future<List<GetCurrentPlaceModal>> getCurrentPlace(
     double lat,
     double lon,
     String apiKey,
@@ -36,8 +36,8 @@ class _HomeRemoteDataSourcePlace implements HomeRemoteDataSourcePlace {
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GetCurrentPlaceModal>(Options(
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<List<GetCurrentPlaceModal>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -53,7 +53,10 @@ class _HomeRemoteDataSourcePlace implements HomeRemoteDataSourcePlace {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = GetCurrentPlaceModal.fromJson(_result.data!);
+    var value = _result.data!
+        .map((dynamic i) =>
+            GetCurrentPlaceModal.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 

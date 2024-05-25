@@ -42,7 +42,7 @@ class HomeRepositoryImpl extends HomeRepository {
         request.key,
         request.limit,
       );
-      return Right(result.toEntity());
+      return Right(result.first.toEntity());
     } catch (e) {
       return Left(ServerFailure(message: e.toString()));
     }

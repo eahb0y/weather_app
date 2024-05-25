@@ -31,7 +31,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       HomeInitialCallEvent event, Emitter<HomeState> emit) async {
     emit(state.copyWith(isLoading: true));
     Position position = await GeolocationService.determinePosition();
-    Future.wait([
+    await Future.wait([
       _getCurrentWeather(position, emit),
       _getCurrentPlace(position, emit),
     ]);

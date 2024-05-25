@@ -8,6 +8,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: AppRoutes.router,
+
       title: 'MediaPark',
       debugShowCheckedModeBanner: false,
     );

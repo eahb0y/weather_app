@@ -18,8 +18,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    print("aadfadsfd");
-    print(widget.access);
     context.read<HomeBloc>().add(const HomeInitialCallEvent());
     super.initState();
   }
@@ -29,30 +27,46 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Home Page"),
+        title: const Text("Current Weather"),
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  'You have pushed the button this many times:',
-                ),
-                Text(
-                  '4',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-              ],
-            ),
-          );
+          return state.isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Text("Current City"),
+                      Text(state.place?.name ?? ""),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      const Text("Current Weather"),
+                      Text(state.weather?.weather?.first.main ?? ""),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      const Text("Weather Description"),
+                      Text(state.weather?.weather?.first.description ?? ""),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      const Text("Weather Temperature"),
+                      Text((((state.weather?.weatherMain ?? 0) - 271).ceil())
+                          .toString())
+                    ],
+                  ),
+                );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        onPressed: () {
+          context.read<HomeBloc>().add(const HomeInitialCallEvent());
+        },
+        child: const Icon(Icons.location_on_outlined),
       ),
     );
   }

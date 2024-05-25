@@ -11,7 +11,7 @@ abstract class HomeRemoteDataSourcePlace {
   _HomeRemoteDataSourcePlace;
 
   @GET("reverse")
-  Future<GetCurrentPlaceModal> getCurrentPlace(
+  Future<List<GetCurrentPlaceModal>> getCurrentPlace(
       @Query("lat") double lat,
       @Query("lon") double lon,
       @Query("appid") String apiKey,

@@ -49,6 +49,7 @@ class AppRoutes {
   // }
 
   static GoRouter router = GoRouter(
+    navigatorKey: rootNavigatorKey,
     debugLogDiagnostics: true,
     initialLocation: Routes.home,
     routes: <RouteBase>[
