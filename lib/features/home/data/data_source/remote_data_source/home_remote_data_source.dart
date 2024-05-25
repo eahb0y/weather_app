@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:inhetited_test/constants/constants.dart';
+import 'package:inhetited_test/features/home/data/modal/get_current_place_modal.dart';
 import 'package:inhetited_test/features/home/data/modal/get_current_weather_modal.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'home_remote_data_source.g.dart';
 
-@RestApi(baseUrl: BaseUrl.baseUrl)
+@RestApi(baseUrl: BaseUrl.currentWeatherUrl)
 abstract class HomeRemoteDataSource {
   factory HomeRemoteDataSource(Dio dio, {String baseUrl}) =
       _HomeRemoteDataSource;

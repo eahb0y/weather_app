@@ -3,7 +3,7 @@ import 'package:inhetited_test/app.dart';
 import 'package:inhetited_test/dependency_injection.dart' as di;
 
 void main() async {
-
+  WidgetsFlutterBinding.ensureInitialized();
   await di.init();
 
   runApp(const MyApp());

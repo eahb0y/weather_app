@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
+import 'package:inhetited_test/features/initial/presentation/arguments/initial_arguments.dart';
+import 'package:inhetited_test/geolocation_servise.dart';
 import 'package:inhetited_test/router/route_name.dart';
 
 class InitialPage extends StatefulWidget {
@@ -11,12 +15,13 @@ class InitialPage extends StatefulWidget {
 class _InitialPageState extends State<InitialPage> {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (context.mounted) {
-        Navigator.of(context).pushReplacementNamed(Routes.home);
-      }
-    });
 
+    if (context.mounted) {
+      context.goNamed(
+        Routes.home,
+        extra: InitialArguments(access: true),
+      );
+    }
     super.initState();
   }
 

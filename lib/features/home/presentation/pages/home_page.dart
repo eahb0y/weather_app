@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inhetited_test/features/home/presentation/bloc/home_bloc.dart';
+import 'package:inhetited_test/features/initial/presentation/arguments/initial_arguments.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final InitialArguments? access;
+
+  const HomePage({
+    super.key,
+    required this.access,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -12,6 +18,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
+    print("aadfadsfd");
+    print(widget.access);
     context.read<HomeBloc>().add(const HomeInitialCallEvent());
     super.initState();
   }
